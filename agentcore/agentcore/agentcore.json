@@ -1,0 +1,66 @@
+{
+  "$schema": "https://schema.agentcore.aws.dev/v1/agentcore.json",
+  "name": "BagGuard",
+  "version": 1,
+  "managedBy": "CDK",
+  "tags": {
+    "agentcore:created-by": "agentcore-cli",
+    "agentcore:project-name": "BagGuard",
+    "Project": "BagGuard",
+    "Environment": "prod",
+    "Workload": "BaggageConnectionRisk",
+    "Owner": "BaggageOperations"
+  },
+  "runtimes": [
+    {
+      "name": "bagguard_investigator_prod",
+      "description": "bagguard-investigator-prod Real-Time Baggage Connection Risk Investigator",
+      "build": "CodeZip",
+      "entrypoint": "app.py",
+      "codeLocation": "../agent",
+      "runtimeVersion": "PYTHON_3_14",
+      "networkMode": "PUBLIC",
+      "protocol": "HTTP",
+      "instrumentation": {
+        "enableOtel": true
+      },
+      "envVars": [
+        {
+          "name": "BAGGUARD_MODEL_ID",
+          "value": "global.amazon.nova-2-lite-v1:0"
+        },
+        {
+          "name": "BAGGUARD_CLICKHOUSE_ADAPTER_FUNCTION_NAME",
+          "value": "bagguard-clickhouse-adapter-prod"
+        }
+      ],
+      "additionalPolicies": [
+        "runtime-policy.json"
+      ],
+      "tags": {
+        "Name": "bagguard-investigator-prod",
+        "Project": "BagGuard",
+        "Environment": "prod",
+        "Workload": "BaggageConnectionRisk",
+        "Owner": "BaggageOperations"
+      },
+      "lifecycleConfiguration": {
+        "idleRuntimeSessionTimeout": 900,
+        "maxLifetime": 3600
+      }
+    }
+  ],
+  "memories": [],
+  "knowledgeBases": [],
+  "credentials": [],
+  "evaluators": [],
+  "onlineEvalConfigs": [],
+  "agentCoreGateways": [],
+  "policyEngines": [],
+  "configBundles": [],
+  "abTests": [],
+  "harnesses": [],
+  "datasets": [],
+  "capacityProviders": [],
+  "payments": []
+}

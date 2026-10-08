@@ -1,0 +1,124 @@
+{
+  "generated_at": "2026-10-05T15:11:58+00:00",
+  "region": "us-east-1",
+  "stream_name": "bagguard-baggage-events-prod",
+  "scenarios": [
+    {
+      "scenario": "ISOLATED BAG",
+      "run_id": "LIVE-20261005-2040-A",
+      "candidate_bags": 1,
+      "flink_incidents_observed": 1,
+      "investigations_observed": 1,
+      "flink_detection": "BAG_CONNECTION_RISK",
+      "agent_tools": [
+        "get_bag_timeline",
+        "get_connection_peers",
+        "get_transfer_zone_health",
+        "get_flight_bag_progress"
+      ],
+      "representative_incident": {
+        "incident_id": "BG-SYN-LIVE-20261005-2040-A-0001-AI-SYN-802-LIVE-20261005-2040-A-BAG_CONNECTION_RISK",
+        "bag_tag_id": "BG-SYN-LIVE-20261005-2040-A-0001",
+        "incident_type": "BAG_CONNECTION_RISK",
+        "detected_at": "2026-10-05 15:07:32.306",
+        "outbound_flight_id": "AI-SYN-802-LIVE-20261005-2040-A",
+        "airport_code": "BLR",
+        "transfer_zone": "T2-LIVE-20261005-2040-A",
+        "minutes_to_departure": 1,
+        "last_scan_type": "TRANSFER_SORTER_SCAN",
+        "last_scan_location": "BLR-T2-LIVE-20261005-2040-A-SORTER",
+        "context_json": "{\"connection_departure_time\":\"2026-10-05T15:08:02.306Z\",\"last_scan_time\":\"2026-10-05T15:07:12.306Z\",\"observed_context\":{\"aircraft_loaded\":false,\"makeup_area_reached\":false},\"seconds_to_departure\":30}"
+      },
+      "representative_investigation": {
+        "incident_id": "BG-SYN-LIVE-20261005-2040-A-0001-AI-SYN-802-LIVE-20261005-2040-A-BAG_CONNECTION_RISK",
+        "bag_tag_id": "BG-SYN-LIVE-20261005-2040-A-0001",
+        "investigated_at": "2026-10-05 15:07:49.109",
+        "classification": "ISOLATED_BAG_HANDLING_DELAY",
+        "root_cause": "Bag appears to be isolated delay at transfer sorter stage while all peer bags successfully completed transfer processing. No evidence of system-wide issues or flight-level delays affecting other bags.",
+        "scope": "ISOLATED",
+        "recommended_action": "Recommend immediate manual bag retrieval and expedited transfer to makeup area. Bag is currently at sorter with only 30 seconds to departure and must be moved to connecting aircraft loading area within this window to avoid missed connection.",
+        "operational_priority": "CRITICAL",
+        "evidence_json": "[\"Bag timeline shows last scan at TRANSFER_SORTER_SCAN at 2026-10-05 15:07:12.306, 50 seconds before departure\",\"Peer bags for same outbound flight AI-SYN-802-LIVE-20261005-2040-A have all reached DESTINATION_ARRIVED status by 15:09:32.306\",\"Transfer zone T2-LIVE-20261005-2040-A shows normal processing with 5 bags arriving and 4 reaching makeup area and destination belt\",\"Flight bag progress confirms all peer bags completed transfer and arrived at destination belt while this bag remains in transfer\"]"
+      }
+    },
+    {
+      "scenario": "TRANSFER ZONE CONGESTION",
+      "run_id": "LIVE-20261005-2040-B",
+      "candidate_bags": 8,
+      "flink_incidents_observed": 8,
+      "investigations_observed": 8,
+      "flink_detection": "BAG_CONNECTION_RISK",
+      "agent_tools": [
+        "get_bag_timeline",
+        "get_connection_peers",
+        "get_transfer_zone_health",
+        "get_flight_bag_progress",
+        "get_recent_connection_risks"
+      ],
+      "representative_incident": {
+        "incident_id": "BG-SYN-LIVE-20261005-2040-B-0001-AI-SYN-802-LIVE-20261005-2040-B-BAG_CONNECTION_RISK",
+        "bag_tag_id": "BG-SYN-LIVE-20261005-2040-B-0001",
+        "incident_type": "BAG_CONNECTION_RISK",
+        "detected_at": "2026-10-05 15:08:24.134",
+        "outbound_flight_id": "AI-SYN-802-LIVE-20261005-2040-B",
+        "airport_code": "BLR",
+        "transfer_zone": "T2-LIVE-20261005-2040-B",
+        "minutes_to_departure": 1,
+        "last_scan_type": "TRANSFER_SORTER_SCAN",
+        "last_scan_location": "BLR-T2-LIVE-20261005-2040-B-SORTER",
+        "context_json": "{\"connection_departure_time\":\"2026-10-05T15:08:54.134Z\",\"last_scan_time\":\"2026-10-05T15:08:04.134Z\",\"observed_context\":{\"aircraft_loaded\":false,\"makeup_area_reached\":false},\"seconds_to_departure\":30}"
+      },
+      "representative_investigation": {
+        "incident_id": "BG-SYN-LIVE-20261005-2040-B-0001-AI-SYN-802-LIVE-20261005-2040-B-BAG_CONNECTION_RISK",
+        "bag_tag_id": "BG-SYN-LIVE-20261005-2040-B-0001",
+        "investigated_at": "2026-10-05 15:08:56.896",
+        "classification": "TRANSFER_ZONE_CONGESTION",
+        "root_cause": "Evidence indicates a transfer zone congestion or system stall at BLR-T2-LIVE-20261005-2040-B-SORTER affecting multiple bags across flights AI-SYN-802-LIVE-20261005-2040-B and AI-SYN-803-LIVE-20261005-2040-B, as shown by simultaneous stalling of bags at identical scan timestamps and synchronized risk detection across peer bags.",
+        "scope": "ZONE_LEVEL",
+        "recommended_action": "Recommend initiating zone-level transfer conveyor system reset and manual bag progression audit for T2-LIVE-20261005-2040-B to clear potential sorter jam or system stall, as multiple bags across two flights are simultaneously stalled at the same processing stage with less than 30 seconds to departure.",
+        "operational_priority": "HIGH",
+        "evidence_json": "[\"Bag timeline shows last scan at TRANSFER_SORTER_SCAN at 2026-10-05 15:08:04.134, 50 seconds before scheduled departure.\",\"Peer bags for the same outbound flight AI-SYN-802-LIVE-20261005-2040-B are all at the same TRANSFER_SORTER_SCAN stage with identical timestamps.\",\"Transfer zone T2-LIVE-20261005-2040-B shows uniform processing: all 8 bags in the zone received TRANSFER_SORTER_SCAN at 15:08:04.134, indicating synchronized system behavior.\",\"Flight-level baggage progress confirms no bags have advanced beyond the sorter for this flight.\",\"Recent connection risk data shows multiple simultaneous BAG_CONNECTION_RISK incidents for bags on both AI-SYN-802-LIVE-20261005-2040-B and AI-SYN-803-LIVE-20261005-2040-B flights, all sharing the same transfer zone and scan timestamp, indicating a zone-level systemic issue.\"]"
+      }
+    },
+    {
+      "scenario": "INBOUND FLIGHT DELAY",
+      "run_id": "LIVE-20261005-2040-C",
+      "candidate_bags": 3,
+      "flink_incidents_observed": 3,
+      "investigations_observed": 3,
+      "flink_detection": "BAG_CONNECTION_RISK",
+      "agent_tools": [
+        "get_bag_timeline",
+        "get_connection_peers",
+        "get_transfer_zone_health",
+        "get_flight_bag_progress",
+        "get_recent_connection_risks"
+      ],
+      "representative_incident": {
+        "incident_id": "BG-SYN-LIVE-20261005-2040-C-0001-AI-SYN-802-LIVE-20261005-2040-C-BAG_CONNECTION_RISK",
+        "bag_tag_id": "BG-SYN-LIVE-20261005-2040-C-0001",
+        "incident_type": "BAG_CONNECTION_RISK",
+        "detected_at": "2026-10-05 15:11:05.812",
+        "outbound_flight_id": "AI-SYN-802-LIVE-20261005-2040-C",
+        "airport_code": "BLR",
+        "transfer_zone": "T2-LIVE-20261005-2040-C",
+        "minutes_to_departure": 1,
+        "last_scan_type": "TRANSFER_SORTER_SCAN",
+        "last_scan_location": "BLR-T2-LIVE-20261005-2040-C-SORTER",
+        "context_json": "{\"connection_departure_time\":\"2026-10-05T15:11:35.812Z\",\"last_scan_time\":\"2026-10-05T15:10:45.812Z\",\"observed_context\":{\"aircraft_loaded\":false,\"makeup_area_reached\":false},\"seconds_to_departure\":30}"
+      },
+      "representative_investigation": {
+        "incident_id": "BG-SYN-LIVE-20261005-2040-C-0001-AI-SYN-802-LIVE-20261005-2040-C-BAG_CONNECTION_RISK",
+        "bag_tag_id": "BG-SYN-LIVE-20261005-2040-C-0001",
+        "investigated_at": "2026-10-05 15:11:51.375",
+        "classification": "NORMAL_PROGRESSION_WITH_UNUSUALLY_SHORT_CONNECTION_TIME",
+        "root_cause": "Tight connection caused by inbound flight delay of 32 minutes combined with short scheduled connection time; all bags for this flight are progressing normally but face system-wide risk pattern",
+        "scope": "FLIGHT_LEVEL",
+        "recommended_action": "Recommend expediting bag transfer to makeup area for flight AI-SYN-802-LIVE-20261005-2040-C; all three bags for this flight are in same lifecycle stage with 30 seconds to departure and no observed aircraft loading",
+        "operational_priority": "HIGH",
+        "evidence_json": "[\"Bag timeline shows last scan at TRANSFER_SORTER_SCAN at 2026-10-05 15:10:45.812\",\"Peer bags for same outbound flight AI-SYN-802-LIVE-20261005-2040-C all show same last scan type and time\",\"Transfer zone T2-LIVE-20261005-2040-C shows normal processing with 3 bags accepted, sorted, loaded, arrived, and sorted in last 10 minutes\",\"Flight baggage progress confirms all three bags are at same lifecycle stage IN_TRANSFER with no aircraft loading observed\",\"Recent connection risks show multiple BAG_CONNECTION_RISK incidents across multiple flights and transfer zones at BLR within last 10 minutes, indicating system-wide risk pattern\"]"
+      }
+    }
+  ],
+  "comparison_markdown": "| Scenario | Flink detection | Agent tools | Root cause | Scope | Recommended intervention |\n|---|---|---|---|---|---|\n| ISOLATED BAG | BAG_CONNECTION_RISK | get_bag_timeline, get_connection_peers, get_transfer_zone_health, get_flight_bag_progress | Bag appears to be isolated delay at transfer sorter stage while all peer bags successfully completed transfer processing. No evidence of system-wide issues or flight-level delays affecting other bags. | ISOLATED | Recommend immediate manual bag retrieval and expedited transfer to makeup area. Bag is currently at sorter with only 30 seconds to departure and must be moved to connecting aircraft loading area within this window to avoid missed connection. |\n| TRANSFER ZONE CONGESTION | BAG_CONNECTION_RISK | get_bag_timeline, get_connection_peers, get_transfer_zone_health, get_flight_bag_progress, get_recent_connection_risks | Evidence indicates a transfer zone congestion or system stall at BLR-T2-LIVE-20261005-2040-B-SORTER affecting multiple bags across flights AI-SYN-802-LIVE-20261005-2040-B and AI-SYN-803-LIVE-20261005-2040-B, as shown by simultaneous stalling of bags at identical scan timestamps and synchronized risk detection across peer bags. | ZONE_LEVEL | Recommend initiating zone-level transfer conveyor system reset and manual bag progression audit for T2-LIVE-20261005-2040-B to clear potential sorter jam or system stall, as multiple bags across two flights are simultaneously stalled at the same processing stage with less than 30 seconds to departure. |\n| INBOUND FLIGHT DELAY | BAG_CONNECTION_RISK | get_bag_timeline, get_connection_peers, get_transfer_zone_health, get_flight_bag_progress, get_recent_connection_risks | Tight connection caused by inbound flight delay of 32 minutes combined with short scheduled connection time; all bags for this flight are progressing normally but face system-wide risk pattern | FLIGHT_LEVEL | Recommend expediting bag transfer to makeup area for flight AI-SYN-802-LIVE-20261005-2040-C; all three bags for this flight are in same lifecycle stage with 30 seconds to departure and no observed aircraft loading |"
+}

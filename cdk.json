@@ -1,0 +1,10 @@
+{
+  "app": "env JSII_RUNTIME_PACKAGE_CACHE_ROOT=.cache/jsii .venv/bin/python infra/app.py",
+  "context": {
+    "@aws-cdk/aws-ec2:uniqueImdsv2TemplateName": true,
+    "@aws-cdk/core:checkSecretUsage": true,
+    "@aws-cdk/core:target-partitions": [
+      "aws"
+    ]
+  }
+}

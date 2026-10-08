@@ -1,0 +1,36 @@
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+# AWS CDK
+cdk.out/
+.cache/
+
+# Build and packaging
+build/
+dist/
+*.zip
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Editors and operating systems
+.DS_Store
+.idea/
+.vscode/
+*.swp

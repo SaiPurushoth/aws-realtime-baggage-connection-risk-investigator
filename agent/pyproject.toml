@@ -1,0 +1,20 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "bagguard-investigator"
+version = "0.1.0"
+description = "Real-Time Baggage Connection Risk Investigator"
+readme = "README.md"
+requires-python = ">=3.14,<3.15"
+dependencies = [
+    "aws-opentelemetry-distro~=0.18.0",
+    "bedrock-agentcore==1.24.0",
+    "boto3==1.43.104",
+    "pydantic==2.13.5",
+    "strands-agents==1.57.2",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["."]

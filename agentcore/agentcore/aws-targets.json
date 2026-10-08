@@ -1,0 +1,8 @@
+[
+  {
+    "name": "production",
+    "description": "BagGuard production AgentCore runtime",
+    "account": "163856954803",
+    "region": "us-east-1"
+  }
+]

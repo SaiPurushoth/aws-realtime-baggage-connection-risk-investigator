@@ -1,0 +1,2 @@
+"""BagGuard infrastructure package."""
+
