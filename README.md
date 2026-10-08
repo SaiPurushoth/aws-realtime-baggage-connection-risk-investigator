@@ -41,30 +41,9 @@ This separation keeps the streaming rule deterministic while allowing the invest
 
 ## Architecture
 
-```mermaid
-flowchart LR
-    Producer["Synthetic Airport Event Producer"]
-    Events["Amazon Kinesis<br/>bagguard-baggage-events-prod"]
-    Flink["Amazon Managed Service<br/>for Apache Flink<br/>bagguard-risk-detector-prod"]
-    Risks["Amazon Kinesis<br/>bagguard-risk-incidents-prod"]
-    Adapter["AWS Lambda<br/>bagguard-clickhouse-adapter-prod"]
-    Dispatcher["AWS Lambda<br/>bagguard-agent-dispatcher-prod"]
-    Agent["Amazon Bedrock AgentCore Runtime<br/>bagguard-investigator-prod"]
-    ClickHouse[("ClickHouse on private EC2<br/>events · incidents · investigations")]
-    Console["BagGuard Operations Console<br/>local Streamlit application"]
+[![BagGuard architecture showing the real-time detection, investigation, and analytical serving paths](docs/architecture/bagguard-architecture.svg)](docs/architecture/bagguard-architecture.svg)
 
-    Producer -->|baggage lifecycle events| Events
-    Events -->|keyed event stream| Flink
-    Events -->|batched ingestion| Adapter
-    Flink -->|BAG_CONNECTION_RISK| Risks
-    Risks -->|batched ingestion| Adapter
-    Risks -->|incident trigger| Dispatcher
-    Dispatcher -->|invoke investigator| Agent
-    Agent -->|allow-listed read tools| Adapter
-    Dispatcher -->|validated investigation result| Adapter
-    Adapter -->|parameterized HTTP requests| ClickHouse
-    Console -->|controlled Lambda actions| Adapter
-```
+The architecture deliberately separates deterministic risk detection from contextual investigation. Select the diagram to open the full-size version.
 
 ### Component responsibilities
 

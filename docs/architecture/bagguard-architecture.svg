@@ -1,0 +1,297 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1040" viewBox="0 0 1600 1040" role="img" aria-labelledby="title desc">
+  <title id="title">BagGuard real-time baggage connection risk architecture</title>
+  <desc id="desc">Synthetic baggage events flow through Amazon Kinesis to a deterministic Apache Flink risk detector. Events and risk incidents are persisted through a private Lambda adapter to ClickHouse. A dispatcher invokes an AgentCore investigator, which uses read-only evidence tools and returns advisory recommendations for the operations console.</desc>
+
+  <defs>
+    <linearGradient id="pageBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F8FBFF"/>
+      <stop offset="1" stop-color="#EEF4FB"/>
+    </linearGradient>
+    <linearGradient id="headerBg" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#102A43"/>
+      <stop offset="1" stop-color="#1E4976"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#102A43" flood-opacity="0.13"/>
+    </filter>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#102A43" flood-opacity="0.10"/>
+    </filter>
+
+    <marker id="arrowNavy" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#24527A"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6F4AA8"/>
+    </marker>
+    <marker id="arrowTeal" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#147D78"/>
+    </marker>
+
+    <style>
+      .font { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; }
+      .title { font: 700 34px Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: #FFFFFF; }
+      .subtitle { font: 400 16px Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: #D9E8F5; }
+      .eyebrow { font: 700 12px Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; letter-spacing: 1.6px; fill: #527089; }
+      .boundary-title { font: 700 15px Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: #24527A; }
+      .lane-title { font: 700 13px Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; letter-spacing: 1px; fill: #486581; }
+      .card-title { font: 700 17px Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: #102A43; }
+      .card-subtitle { font: 500 12px Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: #486581; }
+      .card-meta { font: 400 11px Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: #627D98; }
+      .flow-label { font: 600 11px Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: #334E68; }
+      .callout-title { font: 700 13px Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: #102A43; }
+      .callout-text { font: 500 11px Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: #486581; }
+      .legend { font: 500 11px Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; fill: #486581; }
+      .flow { fill: none; stroke: #24527A; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowNavy); }
+      .evidence { fill: none; stroke: #6F4AA8; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 8 7; marker-end: url(#arrowPurple); }
+      .controlled { fill: none; stroke: #147D78; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrowTeal); }
+    </style>
+  </defs>
+
+  <rect width="1600" height="1040" rx="24" fill="url(#pageBg)"/>
+
+  <!-- Header -->
+  <path d="M24 0 H1576 Q1600 0 1600 24 V126 H0 V24 Q0 0 24 0Z" fill="url(#headerBg)"/>
+  <g transform="translate(42 30)">
+    <rect width="58" height="58" rx="16" fill="#31C3B7"/>
+    <path d="M16 38 C21 22 25 17 29 17 C33 17 37 22 42 38" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="29" cy="28" r="5" fill="#FFFFFF"/>
+    <path d="M13 42 H45" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" opacity="0.85"/>
+  </g>
+  <text x="120" y="58" class="title">BagGuard</text>
+  <text x="120" y="84" class="subtitle">Real-Time Baggage Connection Risk Investigator</text>
+  <g transform="translate(1215 38)">
+    <rect width="334" height="46" rx="23" fill="#FFFFFF" opacity="0.11"/>
+    <circle cx="26" cy="23" r="7" fill="#49D8CB"/>
+    <text x="44" y="28" class="font" font-size="13" font-weight="600" fill="#FFFFFF">Detect early · explain with evidence</text>
+  </g>
+
+  <!-- External actors -->
+  <text x="42" y="170" class="eyebrow">OPERATIONAL EDGE</text>
+
+  <g filter="url(#softShadow)">
+    <rect x="42" y="228" width="190" height="124" rx="16" fill="#FFFFFF" stroke="#B8CADB" stroke-width="1.5"/>
+    <rect x="42" y="228" width="7" height="124" rx="3.5" fill="#147D78"/>
+    <g transform="translate(64 248)">
+      <circle cx="22" cy="22" r="21" fill="#E2F6F3"/>
+      <path d="M11 26 L22 14 L33 26 M14 29 H30" fill="none" stroke="#147D78" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="22" cy="14" r="3" fill="#147D78"/>
+    </g>
+    <text x="64" y="315" class="card-title">Synthetic event</text>
+    <text x="64" y="335" class="card-subtitle">producer</text>
+  </g>
+
+  <g filter="url(#softShadow)">
+    <rect x="42" y="698" width="190" height="132" rx="16" fill="#FFFFFF" stroke="#B8CADB" stroke-width="1.5"/>
+    <rect x="42" y="698" width="7" height="132" rx="3.5" fill="#2B6CB0"/>
+    <g transform="translate(64 718)">
+      <rect x="1" y="3" width="42" height="29" rx="4" fill="#E5F0FA" stroke="#2B6CB0" stroke-width="2"/>
+      <path d="M14 39 H30 M22 32 V39" stroke="#2B6CB0" stroke-width="2" stroke-linecap="round"/>
+      <path d="M9 23 L17 16 L23 20 L34 10" fill="none" stroke="#2B6CB0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <text x="64" y="785" class="card-title">Operations console</text>
+    <text x="64" y="807" class="card-subtitle">Local Streamlit app</text>
+  </g>
+
+  <!-- AWS boundary -->
+  <rect x="268" y="154" width="1288" height="754" rx="22" fill="#FFFFFF" fill-opacity="0.55" stroke="#7AA7CC" stroke-width="2" stroke-dasharray="10 8"/>
+  <g transform="translate(294 142)">
+    <rect width="170" height="29" rx="14.5" fill="#E5F0FA" stroke="#7AA7CC"/>
+    <text x="16" y="20" class="boundary-title">AWS Cloud · prod</text>
+  </g>
+
+  <!-- Lanes -->
+  <rect x="294" y="196" width="1236" height="294" rx="18" fill="#F6FAFE" stroke="#D7E5F1"/>
+  <text x="318" y="225" class="lane-title">1 · DETERMINISTIC REAL-TIME DETECTION</text>
+  <line x1="318" y1="239" x2="1506" y2="239" stroke="#D7E5F1"/>
+
+  <rect x="294" y="510" width="1236" height="368" rx="18" fill="#FCFAFF" stroke="#E3DAF1"/>
+  <text x="318" y="539" class="lane-title">2 · CONTEXTUAL INVESTIGATION &amp; ANALYTICAL SERVING</text>
+  <line x1="318" y1="553" x2="1506" y2="553" stroke="#E3DAF1"/>
+
+  <!-- Detection cards -->
+  <g filter="url(#shadow)">
+    <rect x="326" y="283" width="242" height="132" rx="17" fill="#FFFFFF" stroke="#ED8B49" stroke-width="2"/>
+    <rect x="326" y="283" width="242" height="10" rx="5" fill="#ED8B49"/>
+    <g transform="translate(348 309)">
+      <circle cx="23" cy="23" r="23" fill="#FFF0E5"/>
+      <path d="M12 16 H30 M16 23 H34 M12 30 H30" stroke="#D7681A" stroke-width="3" stroke-linecap="round"/>
+      <path d="M29 12 L36 16 L29 20 M33 19 L40 23 L33 27 M29 26 L36 30 L29 34" fill="none" stroke="#D7681A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <text x="405" y="329" class="card-title">Amazon Kinesis</text>
+    <text x="405" y="350" class="card-subtitle">Baggage event stream</text>
+    <line x1="348" y1="369" x2="546" y2="369" stroke="#E8EEF4"/>
+    <text x="348" y="390" class="card-meta">bagguard-baggage-events-prod</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="655" y="283" width="242" height="132" rx="17" fill="#FFFFFF" stroke="#3B82C4" stroke-width="2"/>
+    <rect x="655" y="283" width="242" height="10" rx="5" fill="#3B82C4"/>
+    <g transform="translate(677 309)">
+      <circle cx="23" cy="23" r="23" fill="#E5F0FA"/>
+      <path d="M10 13 H20 L28 23 L20 33 H10 L18 23 Z M28 13 H38 L30 23 L38 33 H28 L20 23 Z" fill="#2B6CB0" opacity="0.95"/>
+    </g>
+    <text x="734" y="323" class="card-title">Managed Apache Flink</text>
+    <text x="734" y="345" class="card-subtitle">Stateful risk detector</text>
+    <text x="677" y="376" class="card-meta">Event time · per-bag state · timers</text>
+    <text x="677" y="394" class="card-meta">Exactly one deterministic incident</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="984" y="283" width="242" height="132" rx="17" fill="#FFFFFF" stroke="#E25555" stroke-width="2"/>
+    <rect x="984" y="283" width="242" height="10" rx="5" fill="#E25555"/>
+    <g transform="translate(1006 309)">
+      <circle cx="23" cy="23" r="23" fill="#FDECEC"/>
+      <path d="M23 10 V27" stroke="#C53D3D" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="23" cy="35" r="2.8" fill="#C53D3D"/>
+      <circle cx="23" cy="23" r="17" fill="none" stroke="#C53D3D" stroke-width="2.5"/>
+    </g>
+    <text x="1063" y="329" class="card-title">Amazon Kinesis</text>
+    <text x="1063" y="350" class="card-subtitle">Risk incident stream</text>
+    <line x1="1006" y1="369" x2="1204" y2="369" stroke="#E8EEF4"/>
+    <text x="1006" y="390" class="card-meta">BAG_CONNECTION_RISK</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="1310" y="283" width="188" height="132" rx="17" fill="#FFFFFF" stroke="#E59B2F" stroke-width="2"/>
+    <rect x="1310" y="283" width="188" height="10" rx="5" fill="#E59B2F"/>
+    <g transform="translate(1332 310)">
+      <circle cx="23" cy="23" r="23" fill="#FFF3D6"/>
+      <path d="M17 12 L27 33 M28 12 L19 33 M12 33 H21 M25 33 H35" fill="none" stroke="#B86E00" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <text x="1389" y="325" class="card-title">Dispatcher</text>
+    <text x="1389" y="347" class="card-subtitle">AWS Lambda</text>
+    <text x="1332" y="378" class="card-meta">Validate · invoke</text>
+    <text x="1332" y="395" class="card-meta">coordinate persistence</text>
+  </g>
+
+  <!-- Main detection flow -->
+  <path d="M232 290 H326" class="flow"/>
+  <rect x="244" y="258" width="106" height="20" rx="10" fill="#FFFFFF" stroke="#D7E5F1"/>
+  <text x="257" y="272" class="flow-label">lifecycle events</text>
+
+  <path d="M568 349 H655" class="flow"/>
+  <rect x="575" y="318" width="78" height="20" rx="10" fill="#FFFFFF" stroke="#D7E5F1"/>
+  <text x="587" y="332" class="flow-label">keyed stream</text>
+
+  <path d="M897 349 H984" class="flow"/>
+  <rect x="904" y="318" width="79" height="20" rx="10" fill="#FFFFFF" stroke="#D7E5F1"/>
+  <text x="915" y="332" class="flow-label">risk signal</text>
+
+  <path d="M1226 349 H1310" class="flow"/>
+  <rect x="1235" y="318" width="69" height="20" rx="10" fill="#FFFFFF" stroke="#D7E5F1"/>
+  <text x="1245" y="332" class="flow-label">trigger</text>
+
+  <!-- AgentCore -->
+  <g filter="url(#shadow)">
+    <rect x="1264" y="606" width="234" height="144" rx="18" fill="#FFFFFF" stroke="#8464B5" stroke-width="2"/>
+    <rect x="1264" y="606" width="234" height="10" rx="5" fill="#8464B5"/>
+    <g transform="translate(1287 634)">
+      <circle cx="24" cy="24" r="24" fill="#F0EAF8"/>
+      <circle cx="24" cy="19" r="7" fill="none" stroke="#6F4AA8" stroke-width="2.5"/>
+      <path d="M12 38 C14 29 34 29 36 38" fill="none" stroke="#6F4AA8" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M8 17 L3 12 M40 17 L45 12 M24 7 V2" stroke="#6F4AA8" stroke-width="2" stroke-linecap="round"/>
+    </g>
+    <text x="1348" y="651" class="card-title">AgentCore</text>
+    <text x="1348" y="673" class="card-subtitle">BagGuard investigator</text>
+    <line x1="1287" y1="699" x2="1475" y2="699" stroke="#E8EEF4"/>
+    <text x="1287" y="721" class="card-meta">Likely cause · scope · priority</text>
+    <text x="1287" y="738" class="card-meta">Evidence-backed recommendation</text>
+  </g>
+
+  <!-- VPC -->
+  <rect x="366" y="583" width="824" height="253" rx="18" fill="#F5FBFA" stroke="#5EA7A0" stroke-width="2" stroke-dasharray="8 6"/>
+  <g transform="translate(390 570)">
+    <rect width="254" height="28" rx="14" fill="#E2F6F3" stroke="#5EA7A0"/>
+    <text x="14" y="19" class="font" font-size="13" font-weight="700" fill="#147D78">Private data access boundary · VPC</text>
+  </g>
+
+  <!-- Adapter -->
+  <g filter="url(#shadow)">
+    <rect x="420" y="642" width="286" height="142" rx="18" fill="#FFFFFF" stroke="#E59B2F" stroke-width="2"/>
+    <rect x="420" y="642" width="286" height="10" rx="5" fill="#E59B2F"/>
+    <g transform="translate(444 670)">
+      <circle cx="24" cy="24" r="24" fill="#FFF3D6"/>
+      <path d="M18 12 L28 33 M29 12 L20 33 M13 33 H22 M26 33 H36" fill="none" stroke="#B86E00" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <text x="505" y="688" class="card-title">ClickHouse adapter</text>
+    <text x="505" y="710" class="card-subtitle">AWS Lambda · ARM64</text>
+    <line x1="444" y1="738" x2="682" y2="738" stroke="#E8EEF4"/>
+    <text x="444" y="760" class="card-meta">Allow-listed actions · batched writes</text>
+  </g>
+
+  <!-- ClickHouse -->
+  <g filter="url(#shadow)">
+    <rect x="828" y="642" width="310" height="142" rx="18" fill="#FFFFFF" stroke="#D8B100" stroke-width="2"/>
+    <rect x="828" y="642" width="310" height="10" rx="5" fill="#FFD33D"/>
+    <g transform="translate(852 668)">
+      <ellipse cx="27" cy="10" rx="24" ry="9" fill="#FFF5B8" stroke="#B89300" stroke-width="2"/>
+      <path d="M3 10 V39 C3 44 14 48 27 48 C40 48 51 44 51 39 V10" fill="#FFF9D6" stroke="#B89300" stroke-width="2"/>
+      <path d="M3 25 C3 30 14 34 27 34 C40 34 51 30 51 25" fill="none" stroke="#B89300" stroke-width="1.5"/>
+    </g>
+    <text x="921" y="687" class="card-title">ClickHouse on EC2</text>
+    <text x="921" y="709" class="card-subtitle">Unified analytical serving layer</text>
+    <line x1="852" y1="738" x2="1114" y2="738" stroke="#E8EEF4"/>
+    <text x="852" y="760" class="card-meta">Events · incidents · investigations</text>
+  </g>
+
+  <!-- Investigation and data paths -->
+  <path d="M1404 415 V606" class="flow"/>
+  <rect x="1415" y="497" width="78" height="20" rx="10" fill="#FFFFFF" stroke="#D7E5F1"/>
+  <text x="1426" y="511" class="flow-label">invoke agent</text>
+
+  <path d="M1310 399 C1140 520 960 550 795 565 C730 571 680 600 680 642" class="controlled"/>
+  <rect x="1032" y="502" width="155" height="21" rx="10.5" fill="#FFFFFF" stroke="#B9DDD8"/>
+  <text x="1043" y="517" class="flow-label">persist validated result</text>
+
+  <path d="M1264 685 H1210 V810 H706 V775" class="evidence"/>
+  <rect x="936" y="798" width="151" height="21" rx="10.5" fill="#FFFFFF" stroke="#D9CDEB"/>
+  <text x="947" y="813" class="flow-label">allow-listed read tools</text>
+
+  <path d="M706 700 H828" class="evidence"/>
+  <rect x="723" y="668" width="88" height="21" rx="10.5" fill="#FFFFFF" stroke="#D9CDEB"/>
+  <text x="735" y="683" class="flow-label">SELECT only</text>
+
+  <path d="M706 751 H828" class="controlled"/>
+  <rect x="727" y="759" width="82" height="21" rx="10.5" fill="#FFFFFF" stroke="#B9DDD8"/>
+  <text x="739" y="774" class="flow-label">safe INSERT</text>
+
+  <path d="M447 415 V642" class="controlled"/>
+  <rect x="458" y="507" width="105" height="21" rx="10.5" fill="#FFFFFF" stroke="#B9DDD8"/>
+  <text x="470" y="522" class="flow-label">batch ingestion</text>
+
+  <path d="M1105 415 V473 H625 V642" class="controlled"/>
+  <rect x="822" y="462" width="127" height="21" rx="10.5" fill="#FFFFFF" stroke="#B9DDD8"/>
+  <text x="834" y="477" class="flow-label">incident ingestion</text>
+
+  <path d="M232 764 H420" class="controlled"/>
+  <rect x="264" y="731" width="126" height="21" rx="10.5" fill="#FFFFFF" stroke="#B9DDD8"/>
+  <text x="276" y="746" class="flow-label">controlled actions</text>
+
+  <!-- Safety / behavior callouts -->
+  <g transform="translate(294 930)">
+    <rect width="1236" height="76" rx="16" fill="#102A43"/>
+    <g transform="translate(24 17)">
+      <circle cx="20" cy="20" r="20" fill="#244C70"/>
+      <path d="M20 9 L30 13 V21 C30 28 25 33 20 36 C15 33 10 28 10 21 V13 Z" fill="none" stroke="#49D8CB" stroke-width="2.5" stroke-linejoin="round"/>
+      <path d="M15 21 L19 25 L26 17" fill="none" stroke="#49D8CB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <text x="76" y="30" class="font" font-size="13" font-weight="700" fill="#FFFFFF">Safety by design</text>
+    <text x="76" y="50" class="font" font-size="12" font-weight="400" fill="#D9E8F5">Synthetic data only · no public ClickHouse access · no SSH · no writes to airline, airport, flight, baggage, or passenger systems</text>
+    <line x1="960" y1="18" x2="960" y2="58" stroke="#365E80"/>
+    <text x="988" y="27" class="font" font-size="13" font-weight="700" fill="#FFFFFF">Outcome</text>
+    <text x="988" y="45" class="font" font-size="11" font-weight="400" fill="#D9E8F5">Evidence + advisory recommendation</text>
+    <text x="988" y="60" class="font" font-size="11" font-weight="400" fill="#D9E8F5">for a human operator</text>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(294 892)">
+    <path d="M0 0 H42" class="flow"/>
+    <text x="53" y="4" class="legend">event / invocation</text>
+    <path d="M185 0 H227" class="controlled"/>
+    <text x="238" y="4" class="legend">controlled persistence</text>
+    <path d="M410 0 H452" class="evidence"/>
+    <text x="463" y="4" class="legend">read-only evidence path</text>
+    <text x="1038" y="4" class="legend">At-least-once delivery tolerated</text>
+  </g>
+</svg>
