@@ -34,52 +34,76 @@ st.set_page_config(
 st.markdown(
     """
 <style>
-    :root { --ink:#10212b; --muted:#647781; --navy:#0a2638; --cyan:#18b7c9;
-            --amber:#ffb547; --red:#e45858; --panel:#f7fafb; --line:#dce7eb; }
-    .stApp { background: linear-gradient(180deg,#f7fbfc 0,#ffffff 38%); color:var(--ink); }
-    .block-container { max-width: 1500px; padding-top:.7rem; padding-bottom:2.5rem; }
-    h1,h2,h3 { letter-spacing:-0.025em; color:var(--navy); }
-    h1 { font-size:2.45rem !important; margin-bottom:.15rem !important; }
-    h2 { font-size:1.12rem !important; text-transform:uppercase; letter-spacing:.11em;
-         border-bottom:1px solid var(--line); padding-bottom:.55rem; margin-top:1.8rem !important; }
+    :root { --ink:#10212b; --muted:#627680; --navy:#082b3d; --cyan:#16b8c8;
+            --amber:#f3a72f; --red:#dc565d; --green:#1d9b7f; --panel:#f6fafb;
+            --line:#d9e6ea; --shadow:0 12px 32px rgba(8,43,61,.08); }
+    [data-testid="stHeader"], [data-testid="stToolbar"], [data-testid="stDecoration"] {
+        display:none !important;
+    }
+    #MainMenu, footer { visibility:hidden; }
+    .stApp { background:
+        radial-gradient(circle at 94% 3%,rgba(22,184,200,.10),transparent 25rem),
+        linear-gradient(180deg,#f4fafb 0,#ffffff 34%); color:var(--ink); }
+    .block-container { max-width:1480px; padding:1.5rem 2rem 3rem !important; }
+    h1,h2,h3 { letter-spacing:-.025em; color:var(--navy); }
+    h2 { font-size:1.18rem !important; letter-spacing:-.015em;
+         border-bottom:1px solid var(--line); padding-bottom:.65rem;
+         margin-top:2.15rem !important; }
     [data-testid="stMetric"] { background:white; border:1px solid var(--line);
-         border-radius:14px; padding:14px 16px; box-shadow:0 4px 18px rgba(10,38,56,.05); }
-    [data-testid="stMetricLabel"] { color:var(--muted); font-weight:650; }
-    .hero { background:linear-gradient(125deg,#082739,#0f4657); color:white;
-            padding:18px 26px; border-radius:0 0 18px 18px; margin-bottom:14px;
-            box-shadow:0 12px 30px rgba(8,39,57,.18); }
-    .hero-title { font-size:1.95rem; font-weight:800; letter-spacing:-.03em; }
-    .hero-sub { opacity:.86; font-size:.95rem; margin-top:2px; }
-    .live-badge { display:inline-block; background:#123f4c; border:1px solid #2f6875;
-                  border-radius:999px; padding:4px 10px; font-size:.75rem;
-                  letter-spacing:.08em; margin-bottom:9px; }
-    .stage { min-height:126px; background:white; border:1px solid var(--line);
-             border-radius:14px; padding:14px; box-shadow:0 4px 18px rgba(10,38,56,.045); }
+         border-radius:16px; padding:15px 17px; box-shadow:0 6px 22px rgba(8,43,61,.055); }
+    [data-testid="stMetricLabel"] { color:var(--muted); font-weight:700; }
+    [data-testid="stMetricValue"] { color:var(--navy); }
+    .hero { position:relative; overflow:hidden;
+            background:linear-gradient(125deg,#06283a 0%,#0b4252 60%,#0e5664 100%);
+            color:white; padding:28px 32px 30px; border-radius:24px; margin-bottom:22px;
+            box-shadow:0 18px 44px rgba(8,43,61,.22); }
+    .hero::after { content:""; position:absolute; width:290px; height:290px;
+            right:-65px; top:-145px; border-radius:50%;
+            background:radial-gradient(circle,rgba(91,224,226,.30),rgba(91,224,226,0)); }
+    .hero-meta { position:relative; z-index:1; display:flex; align-items:center;
+            flex-wrap:wrap; gap:8px; margin-bottom:14px; }
+    .hero-title { position:relative; z-index:1; font-size:2.25rem; line-height:1.08;
+            font-weight:820; letter-spacing:-.04em; }
+    .hero-sub { position:relative; z-index:1; opacity:.88; font-size:1rem; margin-top:8px; }
+    .hero-badge { display:inline-flex; align-items:center; gap:6px;
+            background:rgba(255,255,255,.09); border:1px solid rgba(178,237,239,.28);
+            border-radius:999px; padding:5px 11px; font-size:.7rem; font-weight:750;
+            letter-spacing:.075em; }
+    .hero-dot { width:7px; height:7px; border-radius:50%; background:#58e0cf;
+            box-shadow:0 0 0 4px rgba(88,224,207,.12); }
+    .scenario-copy { color:var(--muted); font-size:.92rem; margin:0 0 .5rem; }
+    .stage { min-height:130px; background:rgba(255,255,255,.92); border:1px solid var(--line);
+             border-radius:17px; padding:16px; box-shadow:0 7px 24px rgba(8,43,61,.055); }
     .stage-done { border-top:4px solid var(--cyan); }
-    .stage-pending { border-top:4px solid #c8d4d8; opacity:.74; }
-    .stage-name { color:var(--navy); font-weight:750; font-size:.92rem; }
-    .stage-state { margin-top:14px; font-weight:800; }
-    .stage-time { color:var(--muted); font-size:.78rem; margin-top:5px; }
-    .risk-card { background:#fff8ee; border:1px solid #ffd9a0; border-left:6px solid var(--amber);
-                 border-radius:14px; padding:18px 20px; }
-    .risk-card.clear { background:#effaf8; border-color:#bce9e1; border-left-color:#22a68b; }
-    .ai-card { background:#f4f8ff; border:1px solid #cadcf5; border-radius:14px; padding:20px; }
+    .stage-pending { border-top:4px solid #c6d4d8; opacity:.72; }
+    .stage-name { color:var(--navy); font-weight:780; font-size:.92rem; }
+    .stage-state { margin-top:15px; font-weight:820; }
+    .stage-time { color:var(--muted); font-size:.78rem; margin-top:6px; }
+    .risk-card { background:linear-gradient(145deg,#fff8ec,#fffdf8);
+                 border:1px solid #f5d59f; border-left:6px solid var(--amber);
+                 border-radius:17px; padding:20px 22px; box-shadow:var(--shadow); }
+    .risk-card.clear { background:linear-gradient(145deg,#effaf7,#fbfffe);
+                 border-color:#bce7dc; border-left-color:var(--green); }
+    .ai-card { background:linear-gradient(145deg,#f3f8ff,#fbfdff);
+                 border:1px solid #cadcf2; border-radius:17px; padding:21px;
+                 box-shadow:0 8px 28px rgba(42,91,145,.07); }
     .label { color:var(--muted); text-transform:uppercase; letter-spacing:.08em;
              font-size:.72rem; font-weight:750; margin-bottom:5px; }
     .value { color:var(--navy); font-size:1rem; font-weight:700; }
     .priority-CRITICAL,.priority-HIGH { color:#b12f35; }
     .priority-MEDIUM { color:#9b6500; }
     .footer-note { color:var(--muted); font-size:.78rem; margin-top:24px; }
-    div.stButton > button { min-height:3rem; border-radius:12px; font-weight:750; width:100%;
-         background:#fff; color:var(--navy); border:1px solid #b9cbd2;
-         box-shadow:0 3px 12px rgba(10,38,56,.06); }
-    div.stButton > button:hover { background:var(--navy); color:#fff; border-color:var(--navy); }
+    div.stButton > button { min-height:3.15rem; border-radius:14px; font-weight:760; width:100%;
+         background:rgba(255,255,255,.94); color:var(--navy); border:1px solid #b8cdd4;
+         box-shadow:0 5px 18px rgba(8,43,61,.065); transition:all .18s ease; }
+    div.stButton > button:hover { transform:translateY(-2px); background:var(--navy);
+         color:#fff; border-color:var(--navy); box-shadow:0 10px 24px rgba(8,43,61,.16); }
     div.stButton > button:focus { color:#fff; background:#123f4c; border-color:var(--cyan); }
     .pipeline-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px;
                      margin:10px 0 8px; }
-    .pipe-card { position:relative; background:#fff; border:1px solid var(--line);
-                 border-radius:13px; padding:13px 14px 12px; min-height:116px;
-                 box-shadow:0 3px 14px rgba(10,38,56,.045); }
+    .pipe-card { position:relative; background:rgba(255,255,255,.94); border:1px solid var(--line);
+                 border-radius:16px; padding:15px 16px 14px; min-height:120px;
+                 box-shadow:0 7px 22px rgba(8,43,61,.05); }
     .pipe-card.done { border-top:4px solid var(--cyan); }
     .pipe-card.clear { border-top:4px solid #22a68b; }
     .pipe-card.alert { border-top:4px solid var(--amber); }
@@ -89,9 +113,15 @@ st.markdown(
     .pipe-place { color:#71848d; font-size:.72rem; margin-top:2px; }
     .pipe-state { display:inline-block; margin-top:10px; padding:3px 8px; border-radius:999px;
                   background:#eef5f7; color:#214857; font-size:.7rem; font-weight:800; }
-    .pipeline-note { background:#f4f8fa; border-left:4px solid var(--cyan); border-radius:9px;
-                     color:#405963; padding:10px 13px; font-size:.82rem; }
-    @media (max-width:900px) { .pipeline-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    .pipeline-note { background:linear-gradient(90deg,#eef8fa,#f8fcfd);
+                     border:1px solid #d7e9ed; border-left:4px solid var(--cyan);
+                     border-radius:11px; color:#405963; padding:12px 14px; font-size:.82rem; }
+    @media (max-width:900px) {
+        .block-container { padding:1rem 1rem 2.5rem !important; }
+        .hero { padding:24px 22px 26px; border-radius:19px; }
+        .hero-title { font-size:1.8rem; }
+        .pipeline-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    }
 </style>
 """,
     unsafe_allow_html=True,
@@ -172,7 +202,11 @@ def _render_header() -> None:
     st.markdown(
         """
 <div class="hero">
-  <div class="live-badge">● LOCAL OPERATIONS VIEW</div>
+  <div class="hero-meta">
+    <div class="hero-badge"><span class="hero-dot"></span> LIVE OPERATIONS VIEW</div>
+    <div class="hero-badge">SYNTHETIC DATA ONLY</div>
+    <div class="hero-badge">ADVISORY · HUMAN DECISION</div>
+  </div>
   <div class="hero-title">BagGuard Operations Console</div>
   <div class="hero-sub">Real-Time Baggage Connection Risk Investigator</div>
 </div>
@@ -182,7 +216,11 @@ def _render_header() -> None:
 
 
 def _render_scenario_controls() -> None:
-    st.caption("Select an operating condition to follow one bag through the live data path.")
+    st.markdown(
+        '<div class="scenario-copy">Select an operating condition to follow one bag '
+        'through the live data path.</div>',
+        unsafe_allow_html=True,
+    )
     columns = st.columns(4)
     for column, (key, label) in zip(columns, SCENARIOS.items(), strict=True):
         if column.button(label, key=f"scenario-{key}", use_container_width=True):
@@ -259,30 +297,6 @@ def _render_processing_path(snapshot: OperationsSnapshot | None) -> None:
         is written back to ClickHouse for this console.</div>""",
         unsafe_allow_html=True,
     )
-
-
-def _render_flight(snapshot: OperationsSnapshot) -> None:
-    latest = _latest(snapshot.timeline)
-    st.subheader("Flight Connection")
-    cols = st.columns(6)
-    fields = (
-        ("Inbound Flight", latest.get("inbound_flight_id", "—")),
-        ("Outbound Flight", latest.get("outbound_flight_id", "—")),
-        ("Airport", latest.get("airport_code", "—")),
-        ("Gate", latest.get("current_gate", "—")),
-        ("Departure", _format_time(latest.get("estimated_departure_time"))),
-        ("Scenario", snapshot.run.scenario_label),
-    )
-    for column, (label, value) in zip(cols, fields, strict=True):
-        column.metric(label, value)
-
-    @st.fragment(run_every=1)
-    def countdown() -> None:
-        seconds = departure_seconds(snapshot.timeline)
-        display = "—" if seconds is None else f"{seconds // 60:02d}:{seconds % 60:02d}"
-        st.metric("Departure Countdown", display)
-
-    countdown()
 
 
 def _render_journey(snapshot: OperationsSnapshot) -> None:
@@ -367,17 +381,6 @@ def _render_investigation(snapshot: OperationsSnapshot) -> None:
                 st.markdown(f"- {item}")
 
 
-def _render_context(snapshot: OperationsSnapshot) -> None:
-    st.subheader("Airport Context")
-    columns = st.columns(3)
-    columns[0].metric("Bags at risk for this outbound flight", snapshot.flight_risk_bags)
-    columns[1].metric(
-        "Bags at risk in this flight / transfer zone",
-        snapshot.flight_zone_risk_bags,
-    )
-    columns[2].metric("Recent zone-risk count", snapshot.recent_zone_risk_count)
-
-
 def main() -> None:
     _render_header()
     _render_scenario_controls()
@@ -393,14 +396,12 @@ def main() -> None:
             st.session_state["bagguard_snapshot"] = snapshot
         except DashboardServiceError as exc:
             st.error(str(exc))
-    _render_flight(snapshot)
     _render_journey(snapshot)
     left, right = st.columns([1, 2])
     with left:
         _render_risk(snapshot)
     with right:
         _render_investigation(snapshot)
-    _render_context(snapshot)
     st.markdown(
         f"""<div class="footer-note">Region: {service().region_name} · Data access: controlled adapter ·
         Updated: {datetime.now().astimezone().strftime('%H:%M:%S %Z')} ·

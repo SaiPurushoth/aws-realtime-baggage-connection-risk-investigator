@@ -26,4 +26,6 @@ published on the LAN or internet.
 The four scenario buttons publish synthetic data only. For a risk scenario,
 the console polls the adapter until the corresponding structured investigation
 is available. The UI displays evidence and recommendations but never requests
-or displays model chain-of-thought.
+or displays model chain-of-thought. The focused console layout presents the
+live data path, baggage journey, connection risk, and AI investigation without
+unused flight-summary or airport-context panels.

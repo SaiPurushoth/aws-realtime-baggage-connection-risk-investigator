@@ -33,7 +33,11 @@ class DashboardAppTests(unittest.TestCase):
             [message.value for message in app.info],
         )
         self.assertIn("Live Data Path", [heading.value for heading in app.subheader])
+        self.assertNotIn("Flight Connection", [heading.value for heading in app.subheader])
+        self.assertNotIn("Airport Context", [heading.value for heading in app.subheader])
         rendered_markdown = "\n".join(element.value for element in app.markdown)
+        self.assertIn("SYNTHETIC DATA ONLY", rendered_markdown)
+        self.assertIn("ADVISORY · HUMAN DECISION", rendered_markdown)
         self.assertIn("Event Producer", rendered_markdown)
         self.assertIn("Amazon Bedrock AgentCore", rendered_markdown)
         self.assertIn("ClickHouse on private EC2", rendered_markdown)
