@@ -290,6 +290,17 @@ class TestClickHouseStack(unittest.TestCase):
             if resource["Type"] == "AWS::EC2::VPCEndpoint"
         )
         self.assertIn("secretsmanager", str(endpoint["Properties"]["ServiceName"]))
+        endpoint_https_ingress = [
+            resource["Properties"]
+            for resource in self.template.to_json()["Resources"].values()
+            if resource["Type"] == "AWS::EC2::SecurityGroupIngress"
+            and resource["Properties"]["FromPort"] == 443
+            and resource["Properties"]["ToPort"] == 443
+        ]
+        self.assertEqual(2, len(endpoint_https_ingress))
+        for rule in endpoint_https_ingress:
+            self.assertIn("SourceSecurityGroupId", rule)
+            self.assertNotIn("CidrIp", rule)
         self.template.has_resource_properties(
             "AWS::Logs::LogGroup",
             {

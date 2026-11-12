@@ -12,7 +12,8 @@ This CDK application defines `BagGuardProductionStack`, containing:
 - `bagguard-agent-dispatcher-prod` consuming connection-risk incidents and
   coordinating AgentCore investigation result persistence;
 - separate ClickHouse, adapter, and Secrets Manager endpoint security groups;
-- a private Secrets Manager interface endpoint with adapter-only HTTPS access;
+- a private Secrets Manager interface endpoint with HTTPS access restricted to
+  the adapter and the ClickHouse instance that initializes its application user;
 - an encrypted 14-day SQS failure queue and seven-day CloudWatch log retention;
 - two AWS KMS-encrypted, on-demand Kinesis data streams for baggage events and risk incidents;
 - a private, encrypted `bagguard-flink-artifacts-prod-{account}-{region}` application bucket; and

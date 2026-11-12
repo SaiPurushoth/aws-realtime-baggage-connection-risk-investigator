@@ -408,6 +408,11 @@ class BagGuardProductionStack(Stack):
             connection=ec2.Port.tcp(443),
             description="Secrets Manager HTTPS from adapter only",
         )
+        secrets_endpoint_security_group.add_ingress_rule(
+            peer=clickhouse_security_group,
+            connection=ec2.Port.tcp(443),
+            description="Secrets Manager HTTPS from ClickHouse initialization only",
+        )
         adapter_security_group.add_egress_rule(
             peer=secrets_endpoint_security_group,
             connection=ec2.Port.tcp(443),
